@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1062115509639",
+    "project_id": "ambulance-nepal",
+    "storage_bucket": "ambulance-nepal.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1062115509639:android:7eb66265152d4095bc7f22",
+        "android_client_info": {
+          "package_name": "com.techsales.ambulance_nepal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1062115509639-751fp46bijv8he7a57umldokpfuc030s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSuGdrgVRtp6awOferb1BhBsytnkgVu8I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1062115509639-751fp46bijv8he7a57umldokpfuc030s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
