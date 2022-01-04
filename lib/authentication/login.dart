@@ -102,28 +102,35 @@ class LoginPage extends StatelessWidget {
 
                               Utilities.showAlertDialog(
                                   context, "Please Wait", "Logging In");
-                              switch (Constants.loginType) {
-                                case Constants.driver:
-                                  role = 7;
-                                  break;
-                                case Constants.traffic:
-                                  role = 8;
-                                  break;
-                                case Constants.admin:
-                                  role = 9;
-                                  break;
-                                case Constants.public:
-                                  role = 10;
-                                  break;
-                                default:
-                                  role = 10;
-                                  break;
+                              if (_phoneController.text.isNotEmpty &&
+                                  _passwordController.text.isNotEmpty) {
+                                switch (Constants.loginType) {
+                                  case Constants.driver:
+                                    role = 7;
+                                    break;
+                                  case Constants.traffic:
+                                    role = 8;
+                                    break;
+                                  case Constants.admin:
+                                    role = 9;
+                                    break;
+                                  case Constants.public:
+                                    role = 10;
+                                    break;
+                                  default:
+                                    role = 10;
+                                    break;
+                                }
+                                Get.find<AuthController>().loginUser(
+                                    _phoneController.text,
+                                    _passwordController.text,
+                                    role.toString(),
+                                    Get.find<AuthController>().fcmToken);
+                              } else {
+                                Utilities.showToast("All Field are required",
+                                    toastType: ToastType.error);
+                                Get.back();
                               }
-                              Get.find<AuthController>().loginUser(
-                                  _phoneController.text,
-                                  _passwordController.text,
-                                  role.toString(),
-                                  Get.find<AuthController>().fcmToken);
                             }
                           : null,
                       child: const Text("Login"),

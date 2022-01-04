@@ -1,5 +1,6 @@
 import 'package:ambulance_nepal/admin/admin_checklist.dart';
 import 'package:ambulance_nepal/admin/admin_controller.dart';
+import 'package:ambulance_nepal/ambulance/ambulance.dart';
 import 'package:ambulance_nepal/utils/constants.dart';
 import 'package:ambulance_nepal/utils/utilities.dart';
 import 'package:ambulance_nepal/widget/appbar.dart';
@@ -8,22 +9,29 @@ import 'package:get/get.dart';
 
 // ignore: must_be_immutable
 class AdminChecklistFormPage extends StatelessWidget {
-  AdminChecklistFormPage({Key? key}) : super(key: key);
+  AdminChecklistFormPage({Key? key, required this.ambulance}) : super(key: key);
 
-  // var controller = Get.
+  Ambulance ambulance;
 
   final TextEditingController _vehicleNumberController =
       TextEditingController();
 
   final TextEditingController _medicineController = TextEditingController();
 
+  final TextEditingController _rejectedMessageController =
+      TextEditingController();
+
   var checked = List<bool>.generate(35, (index) => false).obs;
+
+  final _acceptStatus = AcceptStatus.none.obs;
+
+  int count = 0; //accept or reject count
 
   Widget buildVehicleNumberField() {
     return Row(
       children: [
         const Text(
-          "Vehicle Number: ",
+          "Vehicle Number*: ",
           style: TextStyle(
             fontSize: 16.0,
           ),
@@ -69,13 +77,16 @@ class AdminChecklistFormPage extends StatelessWidget {
   }
 
   validateInput() {
-    return _vehicleNumberController.text.isNotEmpty;
+    return _vehicleNumberController.text.isNotEmpty &&
+        _acceptStatus.value != AcceptStatus.none;
   }
 
   AdminChecklist assignValue() {
     AdminChecklist checklist = AdminChecklist();
-    checklist.ambulanceId = 12; //TODO: make dynamic
-    checklist.ambulanceType = "ka"; //TODO: make dynamic
+    checklist.ambulanceId = ambulance.id;
+    checklist.ambulanceType = ambulance.ambulanceCatagory;
+    checklist.rejectedMessage = _rejectedMessageController.text;
+    checklist.rejectedType = count.toString();
     checklist.vehicleNumber = _vehicleNumberController.text;
     checklist.medicines = _medicineController.text;
     checklist.stethoscope = checked[1].toString();
@@ -177,6 +188,62 @@ class AdminChecklistFormPage extends StatelessWidget {
                   prefixIcon: Icon(Icons.medication),
                 ),
               ),
+              InputDecorator(
+                decoration: const InputDecoration(
+                  label: Text("Accept Status*"),
+                ),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Row(
+                          children: [
+                            const Text("Accept: "),
+                            Obx(
+                              () => Radio(
+                                value: AcceptStatus.accept,
+                                groupValue: _acceptStatus.value,
+                                onChanged: (AcceptStatus? value) {
+                                  count = 9;
+                                  _acceptStatus.value = value!;
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            const Text("Reject:"),
+                            Obx(
+                              () => Radio(
+                                value: AcceptStatus.reject,
+                                groupValue: _acceptStatus.value,
+                                onChanged: (AcceptStatus? value) {
+                                  count = int.parse(
+                                          ambulance.formLevel.toString()) +
+                                      1;
+                                  _acceptStatus.value = value!;
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    Obx(
+                      () => (_acceptStatus.value == AcceptStatus.reject)
+                          ? TextField(
+                              controller: _rejectedMessageController,
+                              decoration: const InputDecoration(
+                                label: Text("Reason For reject* "),
+                              ),
+                            )
+                          : const SizedBox(),
+                    ),
+                  ],
+                ),
+              ),
               MaterialButton(
                 onPressed: () async {
                   if (validateInput()) {
@@ -189,7 +256,7 @@ class AdminChecklistFormPage extends StatelessWidget {
                       Get.close(1); // go back 2 step
                     }
                   } else {
-                    Utilities.showToast("Vehicle Number is required",
+                    Utilities.showToast("All * field are required",
                         toastType: ToastType.error);
                   }
                 },
@@ -202,3 +269,5 @@ class AdminChecklistFormPage extends StatelessWidget {
     );
   }
 }
+
+enum AcceptStatus { accept, reject, none }

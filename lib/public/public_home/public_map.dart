@@ -167,12 +167,12 @@ class _PublicMapPageState extends State<PublicMapPage> {
                           latitude: selectedLatitude.value == 0.0
                               ? Get.find<LocationServices>()
                                   .locationData!
-                                  .latitude!
+                                  .latitude
                               : selectedLatitude.value,
                           longitude: selectedLongitude.value == 0.0
                               ? Get.find<LocationServices>()
                                   .locationData!
-                                  .longitude!
+                                  .longitude
                               : selectedLongitude.value,
                         ),
                       ),
@@ -214,8 +214,8 @@ class _PublicMapPageState extends State<PublicMapPage> {
 
   Widget _mapView() {
     CameraPosition pos = CameraPosition(
-        target: LatLng(Get.find<LocationServices>().locationData!.latitude!,
-            Get.find<LocationServices>().locationData!.longitude!),
+        target: LatLng(Get.find<LocationServices>().locationData!.latitude,
+            Get.find<LocationServices>().locationData!.longitude),
         zoom: midZoom);
     return Obx(
       () => GoogleMap(

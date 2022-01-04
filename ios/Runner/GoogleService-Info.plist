@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1062115509639-6qrn773qnoujj8sk4gpsq53ltqg3o1ov.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1062115509639-6qrn773qnoujj8sk4gpsq53ltqg3o1ov</string>
+	<key>API_KEY</key>
+	<string>AIzaSyB5U7zAyycD2lB14vCGXKIGOgD6tep2WIg</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1062115509639</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.techsales.ambulance-nepal</string>
+	<key>PROJECT_ID</key>
+	<string>ambulance-nepal</string>
+	<key>STORAGE_BUCKET</key>
+	<string>ambulance-nepal.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1062115509639:ios:88626411d06ea5b1bc7f22</string>
+</dict>
+</plist>

@@ -9,6 +9,8 @@ import 'package:http/http.dart' as http;
 class AdminChecklist {
   int? ambulanceId;
   String? ambulanceType;
+  String? rejectedMessage;
+  String? rejectedType;
   String? vehicleNumber;
   String? stethoscope;
   String? bpSet;
@@ -48,6 +50,8 @@ class AdminChecklist {
   AdminChecklist(
       {this.ambulanceId,
       this.ambulanceType,
+      this.rejectedMessage,
+      this.rejectedType,
       this.vehicleNumber,
       this.stethoscope,
       this.bpSet,
@@ -87,6 +91,8 @@ class AdminChecklist {
   AdminChecklist.fromJson(Map<String, dynamic> json) {
     ambulanceId = json['ambulance_id'];
     ambulanceType = json['ambulance_type'];
+    rejectedMessage = json['rejected_message'];
+    rejectedType = json['rejected_type'];
     vehicleNumber = json['vehicle_number'];
     stethoscope = json['stethoscope'];
     bpSet = json['bp_set'];
@@ -129,6 +135,8 @@ class AdminChecklist {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['ambulance_id'] = ambulanceId.toString();
     data['ambulance_type'] = ambulanceType;
+    data['rejected_message'] = rejectedMessage;
+    data['rejected_type'] = rejectedType;
     data['vehicle_number'] = vehicleNumber;
     data['stethoscope'] = stethoscope;
     data['bp_set'] = bpSet;

@@ -1,4 +1,5 @@
 import 'package:ambulance_nepal/admin/admin_controller.dart';
+import 'package:ambulance_nepal/ambulance/ambulance_controller.dart';
 import 'package:ambulance_nepal/authentication/auth_controller.dart';
 import 'package:ambulance_nepal/driver/driver_controller.dart';
 import 'package:ambulance_nepal/map/devices/device_controller.dart';
@@ -19,5 +20,6 @@ class ControllerBindings extends Bindings {
     Get.lazyPut(() => AdminController());
     Get.lazyPut(() => DeviceController());
     Get.lazyPut(() => VehicleRequestController());
+    Get.lazyPut(() => AmbulanceController());
   }
 }

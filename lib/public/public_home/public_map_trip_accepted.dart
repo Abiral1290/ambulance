@@ -103,8 +103,8 @@ class _PublicMaptripAcceptedPageState extends State<PublicMaptripAcceptedPage> {
 
   Widget _mapView() {
     CameraPosition pos = CameraPosition(
-        target: LatLng(Get.find<LocationServices>().locationData!.latitude!,
-            Get.find<LocationServices>().locationData!.longitude!),
+        target: LatLng(Get.find<LocationServices>().locationData!.latitude,
+            Get.find<LocationServices>().locationData!.longitude),
         zoom: midZoom);
     return Obx(
       () => GoogleMap(

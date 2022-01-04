@@ -1,15 +1,10 @@
-import 'dart:async';
-
 import 'package:ambulance_nepal/utils/utilities.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:location/location.dart';
-import 'package:flutter/services.dart';
+// import 'package:location/location.dart';
 
 class LocationServices extends GetxController {
-  final Location location = Location();
-
-  LocationData? locationData;
-  StreamSubscription<LocationData>? _locationSubscription;
+  Position? locationData;
 
   @override
   onInit() {
@@ -21,35 +16,12 @@ class LocationServices extends GetxController {
     checkLocation();
   }
 
-  Future<void> _listenLocation() async {
-    _locationSubscription =
-        location.onLocationChanged.handleError((dynamic err) {
-      if (err is PlatformException) {}
-      _locationSubscription?.cancel();
-
-      _locationSubscription = null;
-    }).listen((LocationData currentLocation) {
-      locationData = currentLocation;
-      update();
-      location.changeNotificationOptions(
-          onTapBringToFront: true,
-          title: "Location Service is running in background",
-          subtitle: "${locationData!.latitude}, ${locationData!.longitude}");
-    });
-  }
-
-  Future<void> stopListen() async {
-    _locationSubscription?.cancel();
-
-    _locationSubscription = null;
-  }
-
   checkLocation() async {
-    bool _serviceEnabled = await location.serviceEnabled();
+    bool isLocationOpened = await Geolocator.isLocationServiceEnabled();
 
-    if (!_serviceEnabled) {
+    if (!isLocationOpened) {
       Utilities.showToast('Please enable location!', toastType: ToastType.info);
-      await location.requestService().then((value) {
+      await Geolocator.openLocationSettings().then((value) {
         if (value) {
           checkAndRequestPermission();
         }
@@ -59,30 +31,35 @@ class LocationServices extends GetxController {
     }
   }
 
+  getPositionStream() async {
+    Geolocator.getPositionStream().listen((Position position) async {
+      locationData = position;
+      update();
+    });
+  }
+
+  getCurrentPosition() {
+    Geolocator.getCurrentPosition().then((value) {
+      locationData = value;
+      update();
+    });
+  }
+
   checkAndRequestPermission() async {
-    var isBackground = await location.isBackgroundModeEnabled();
-    await location.hasPermission().then((value) {
-      if (value == PermissionStatus.granted ||
-          value == PermissionStatus.grantedLimited) {
-        _listenLocation();
-
-        // to fetch location in background
-        if (!isBackground) {
-          location.enableBackgroundMode(enable: true);
-        }
-      } else if (value == PermissionStatus.denied ||
-          value == PermissionStatus.deniedForever) {
-        location.requestPermission().then((value) {
-          if (value == PermissionStatus.granted ||
-              value == PermissionStatus.grantedLimited) {
-            _listenLocation();
-
-            // to fetch location in background
-            if (!isBackground) {
-              location.enableBackgroundMode(enable: true);
-            }
-          } else if (value == PermissionStatus.denied ||
-              value == PermissionStatus.deniedForever) {
+    await Geolocator.checkPermission().then((value) {
+      if (value == LocationPermission.always ||
+          value == LocationPermission.whileInUse) {
+        getCurrentPosition();
+        getPositionStream();
+      } else if (value == LocationPermission.denied ||
+          value == LocationPermission.deniedForever) {
+        Geolocator.requestPermission().then((value) {
+          if (value == LocationPermission.always ||
+              value == LocationPermission.whileInUse) {
+            getCurrentPosition();
+            getPositionStream();
+          } else if (value == LocationPermission.denied ||
+              value == LocationPermission.deniedForever) {
             Utilities.showToast(
                 "Permission denied. Please enable location permission",
                 toastType: ToastType.error);

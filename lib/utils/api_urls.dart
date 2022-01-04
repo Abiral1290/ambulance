@@ -18,6 +18,7 @@ class ApiUrls {
       mainUrl + "traffic_ambulance_checklists"; //post
 
   // admin
+  static String adminAmbulanceList = mainUrl + "admin_ambulance_checklists";
   static String adminChecklist = mainUrl + "admin_ambulance_checklists"; //post
 
   // deviceList
