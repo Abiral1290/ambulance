@@ -85,8 +85,9 @@ Future<ApiResponse<Driver?>> registerDriverApi(Driver driver) async {
     var headers = {
       "Accept": "application/json",
     };
+    var body = driver.toJson();
     final response = await http.post(Uri.parse(ApiUrls.register),
-        headers: headers, body: driver.toJson());
+        headers: headers, body: body);
     if (response.statusCode == 200) {
       var mapResponse = json.decode(response.body);
 

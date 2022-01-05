@@ -1,5 +1,6 @@
 import 'package:ambulance_nepal/authentication/auth_controller.dart';
 import 'package:ambulance_nepal/driver/driver_home/driver_profile.dart';
+import 'package:ambulance_nepal/hospitals/view_hospitals.dart';
 import 'package:ambulance_nepal/services/firebase_services.dart';
 import 'package:ambulance_nepal/settings/settings.dart';
 import 'package:ambulance_nepal/utils/constants.dart';
@@ -46,10 +47,12 @@ class _DriverHomePageState extends State<DriverHomePage> {
                   size: iconSize,
                 )),
             IndividualCardTile(
-                title: "View Request",
-                onPressed: () {},
+                title: "Hospitals",
+                onPressed: () {
+                  Get.to(() => ViewHospitalPage());
+                },
                 icon: Icon(
-                  Icons.request_page,
+                  Icons.local_hospital_rounded,
                   size: iconSize,
                 )),
             IndividualCardTile(

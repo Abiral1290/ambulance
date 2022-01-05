@@ -1,5 +1,6 @@
 import 'package:ambulance_nepal/authentication/auth_controller.dart';
 import 'package:ambulance_nepal/driver/driver_controller.dart';
+import 'package:ambulance_nepal/hospitals/hospitals_controller.dart';
 import 'package:ambulance_nepal/utils/constants.dart';
 import 'package:ambulance_nepal/widget/appbar.dart';
 import 'package:ambulance_nepal/widget/profile.dart';
@@ -15,7 +16,7 @@ class DriverProfilePage extends StatelessWidget {
   onRefresh() {
     Get.find<AuthController>().getProfile();
     Get.find<DriverController>().fetchAddress();
-    Get.find<DriverController>().fetchHospitals();
+    Get.find<HospitalsController>().fetchHospitals();
   }
 
   Widget buildRowTile(String key, String value) {
@@ -120,12 +121,12 @@ class DriverProfilePage extends StatelessWidget {
             ),
           ),
           GetBuilder<DriverController>(builder: (builder) {
-            return Get.find<DriverController>().hospitalList.isEmpty
+            return Get.find<HospitalsController>().hospitalList.isEmpty
                 ? const Center(child: CircularProgressIndicator.adaptive())
                 : Padding(
                     padding: const EdgeInsets.only(left: 20.0),
                     child: Text(
-                      Get.find<DriverController>()
+                      Get.find<HospitalsController>()
                           .getUserHospital(
                               Get.find<AuthController>().userProfile.hospitalId)
                           .hospitalName!,

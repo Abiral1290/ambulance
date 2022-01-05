@@ -1,3 +1,4 @@
+import 'package:ambulance_nepal/hospitals/view_hospitals.dart';
 import 'package:ambulance_nepal/public/public_home/public_map.dart';
 import 'package:ambulance_nepal/public/public_home/public_map_trip_accepted.dart';
 import 'package:ambulance_nepal/public/public_home/public_profile.dart';
@@ -36,9 +37,9 @@ class _PublicHomePageState extends State<PublicHomePage> {
       label: "Profile",
     ),
     const BottomNavigationBarItem(
-      icon: Icon(Icons.devices_other_outlined),
+      icon: Icon(Icons.local_hospital_outlined),
       activeIcon: Icon(
-        Icons.devices_other,
+        Icons.local_hospital,
       ),
       label: "Other Item",
     ),
@@ -58,9 +59,7 @@ class _PublicHomePageState extends State<PublicHomePage> {
           : const PublicMapPage(),
     ),
     PublicProfilePage(),
-    const Center(
-      child: Text("Other Page"),
-    ),
+    ViewHospitalPage(),
     SettingsPage(),
   ];
 

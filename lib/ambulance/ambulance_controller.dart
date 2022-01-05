@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 class AmbulanceController extends GetxController {
   List<Ambulance> ambulanceList = [];
+  List<Ambulance> searchedAmbulanceList = [];
 
   @override
   onInit() {
@@ -24,5 +25,22 @@ class AmbulanceController extends GetxController {
     } else {
       Utilities.showToast("No Internet Connection", toastType: ToastType.error);
     }
+  }
+
+  searchAmbulance(String text) {
+    searchedAmbulanceList = ambulanceList
+        .where((element) => (element.vehicleName!
+                .trim()
+                .toLowerCase()
+                .contains(text.trim().toLowerCase()) ||
+            element.vehicleNumber!.toLowerCase().contains(text.toLowerCase())))
+        .toList();
+    print(searchedAmbulanceList);
+    update();
+  }
+
+  clearSearch() {
+    searchedAmbulanceList = [];
+    update();
   }
 }

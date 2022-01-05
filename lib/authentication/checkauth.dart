@@ -26,7 +26,7 @@ class Checkauth extends StatelessWidget {
             Constants.traffic.toLowerCase()) {
           return const TrafficHomePage();
         } else {
-          return const AdminHomePage();
+          return AdminHomePage();
         }
       } else {
         return const LoginHomePage();

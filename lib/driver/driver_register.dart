@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:ambulance_nepal/driver/driver.dart';
 import 'package:ambulance_nepal/driver/driver_controller.dart';
 import 'package:ambulance_nepal/hospitals/hospitals.dart';
+import 'package:ambulance_nepal/hospitals/hospitals_controller.dart';
 import 'package:ambulance_nepal/utils/constants.dart';
 import 'package:ambulance_nepal/utils/utilities.dart';
 import 'package:ambulance_nepal/widget/appbar.dart';
@@ -23,6 +24,7 @@ class DriverRegisterPage extends StatelessWidget {
   final ImagePicker _picker = ImagePicker();
 
   var driverController = Get.put(DriverController());
+  var hospitalController = Get.put(HospitalsController());
 
   late var provinceList = Get.find<DriverController>().provinceList.obs;
 
@@ -107,7 +109,7 @@ class DriverRegisterPage extends StatelessWidget {
     driver.address = _addressController.text;
     driver.wodaNo = _wardNoController.text;
     driver.hospitalId =
-        Get.find<DriverController>().selectedHospital!.id.toString();
+        Get.find<HospitalsController>().selectedHospital!.id.toString();
     driver.dob = dob.value;
     driver.driverPhoto = Utilities.encodeToBase64(File(driverImage.value));
     driver.licenceNumber = _licenseNumberController.text;
@@ -197,14 +199,15 @@ class DriverRegisterPage extends StatelessWidget {
               iconDisabledColor: Colors.red,
               isDense: true,
               isExpanded: true,
-              hint: Text(
-                  Get.find<DriverController>().selectedHospital!.hospitalName!),
-              items: Get.find<DriverController>().hospitalList.map((e) {
+              hint: Text(Get.find<HospitalsController>()
+                  .selectedHospital!
+                  .hospitalName!),
+              items: Get.find<HospitalsController>().hospitalList.map((e) {
                 return DropdownMenuItem<Hospitals>(
                     value: e, child: Text(e.hospitalName!));
               }).toList(),
               onChanged: (hospitals) {
-                Get.find<DriverController>().setSelectedHospital(hospitals!);
+                Get.find<HospitalsController>().setSelectedHospital(hospitals!);
               },
             ),
           ),
@@ -480,7 +483,7 @@ class DriverRegisterPage extends StatelessWidget {
         ),
         body: GetBuilder<DriverController>(builder: (builder) {
           return Get.find<DriverController>().provinceList.isEmpty &&
-                  Get.find<DriverController>().hospitalList.isEmpty
+                  Get.find<HospitalsController>().hospitalList.isEmpty
               ? const Center(
                   child: CircularProgressIndicator.adaptive(),
                 )

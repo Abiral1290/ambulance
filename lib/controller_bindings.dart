@@ -2,6 +2,7 @@ import 'package:ambulance_nepal/admin/admin_controller.dart';
 import 'package:ambulance_nepal/ambulance/ambulance_controller.dart';
 import 'package:ambulance_nepal/authentication/auth_controller.dart';
 import 'package:ambulance_nepal/driver/driver_controller.dart';
+import 'package:ambulance_nepal/hospitals/hospitals_controller.dart';
 import 'package:ambulance_nepal/map/devices/device_controller.dart';
 import 'package:ambulance_nepal/services/location_services.dart';
 import 'package:ambulance_nepal/services/preference_services.dart';
@@ -15,6 +16,7 @@ class ControllerBindings extends Bindings {
     Get.put(LocationServices(), permanent: true);
     Get.put(PreferenceService(), permanent: true);
     Get.put(AuthController(), permanent: true);
+    Get.lazyPut(() => HospitalsController());
     Get.lazyPut(() => DriverController());
     Get.lazyPut(() => TrafficController());
     Get.lazyPut(() => AdminController());

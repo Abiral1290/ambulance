@@ -1,6 +1,5 @@
 import 'package:ambulance_nepal/address/address.dart';
 import 'package:ambulance_nepal/driver/driver.dart';
-import 'package:ambulance_nepal/hospitals/hospitals.dart';
 import 'package:ambulance_nepal/utils/utilities.dart';
 import "package:collection/collection.dart";
 
@@ -8,13 +7,10 @@ import 'package:get/get.dart';
 
 class DriverController extends GetxController {
   List<Address> addressList = [];
-  List<Hospitals> hospitalList = [];
 
   List<String> provinceList = [];
   List<String> districtList = [];
   List<String> areaList = [];
-
-  Hospitals? selectedHospital;
 
   String selectedProvince = "";
   String selectedDistrict = "";
@@ -42,11 +38,6 @@ class DriverController extends GetxController {
   setSelectedArea(String area) {
     selectedArea = area;
     getSelectedAreaId(area);
-    update();
-  }
-
-  setSelectedHospital(Hospitals hospitals) {
-    selectedHospital = hospitals;
     update();
   }
 
@@ -100,18 +91,12 @@ class DriverController extends GetxController {
     return list.first;
   }
 
-  Hospitals getUserHospital(String hospitalId) {
-    var list =
-        hospitalList.where((element) => element.id.toString() == hospitalId);
-    return list.first;
-  }
-
   @override
   void onInit() {
     districtList = [];
     areaList = [];
     fetchAddress();
-    fetchHospitals();
+    // fetchHospitals();
     super.onInit();
   }
 
@@ -122,23 +107,6 @@ class DriverController extends GetxController {
         if (value.success) {
           addressList = value.response!;
           getProvinceList();
-          update();
-        } else {
-          Utilities.showToast(value.message, toastType: ToastType.error);
-        }
-      });
-    } else {
-      Utilities.showToast("No internet connection", toastType: ToastType.info);
-    }
-  }
-
-  fetchHospitals() async {
-    var conn = await Utilities.checkInternetConnection();
-    if (conn) {
-      fetchHospitalsApi().then((value) {
-        if (value.success) {
-          hospitalList = value.response!;
-          selectedHospital = hospitalList.first;
           update();
         } else {
           Utilities.showToast(value.message, toastType: ToastType.error);
