@@ -28,4 +28,6 @@ class ApiUrls {
   // vehicle request
   static String vehicleRequest = mainUrl + "requests"; //post
   static String vehicleResponse = mainUrl + "response"; //post
+  static String tripStart = mainUrl + "start_trip"; //post
+  static String tripEnd = mainUrl + "end_trip"; //post
 }

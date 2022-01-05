@@ -77,7 +77,7 @@ class _PublicMapPageState extends State<PublicMapPage> {
   void initState() {
     createMarkerIcon();
     fetchDevices();
-    timer = Timer(const Duration(seconds: 10), () {
+    timer = Timer.periodic(const Duration(seconds: 10), (timer) {
       fetchDevices();
     });
     super.initState();
@@ -103,14 +103,6 @@ class _PublicMapPageState extends State<PublicMapPage> {
     await getBytesFromAsset('assets/ambulance_marker.png', 64).then((onValue) {
       ambulanceIcon = BitmapDescriptor.fromBytes(onValue);
     });
-    // var bitmap = await BitmapDescriptor.fromAssetImage(
-    //   const ImageConfiguration(
-    //     devicePixelRatio: 2.5,
-    //     size: Size(1000, 1000),
-    //   ),
-    //   "assets/ambulance_marker.png",
-    // );
-    // ambulanceIcon = bitmap;
   }
 
   fetchDevices() async {

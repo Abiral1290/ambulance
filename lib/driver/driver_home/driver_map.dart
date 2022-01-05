@@ -2,6 +2,7 @@ import 'package:ambulance_nepal/map/devices/device_controller.dart';
 import 'package:ambulance_nepal/map/map_controller.dart';
 import 'package:ambulance_nepal/services/location_services.dart';
 import 'package:ambulance_nepal/utils/constants.dart';
+import 'package:ambulance_nepal/vehicle_request/vehicle_request_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -167,17 +168,24 @@ class _DriverMapPageState extends State<DriverMapPage> {
     return ElevatedButton(
         onPressed: () {
           if (!(Constants.isTripStarted.value)) {
+            //start trip
             Constants.isTripEnded.value = false;
             Constants.isTripStarted.value = true;
 
-            //TODO: implement start trip api
+            Get.find<VehicleRequestController>()
+                .sendStartTrip(Constants.requestId, DateTime.now().toString());
           } else if (Constants.isTripStarted.value &&
               !(Constants.isTripEnded.value)) {
+            //end trip
             Constants.isTripStarted.value = false;
             Constants.isTripEnded.value = true;
             Get.back();
 
-            //TODO: implement end trip api
+            Get.find<VehicleRequestController>().sendEndTrip(
+                Constants.requestId,
+                DateTime.now().toString(),
+                Get.find<LocationServices>().locationData!.latitude.toString(),
+                Get.find<LocationServices>().locationData!.latitude.toString());
           } else {
             Constants.isTripEnded.value = false;
             Constants.isTripStarted.value = false;

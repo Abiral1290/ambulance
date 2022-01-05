@@ -13,12 +13,13 @@ Future<void> onBackgroundMessage(RemoteMessage message) async {
 
   print("FCM background initailized");
 
-  displayNotification(message);
+  handleNotification(message);
 }
 
-displayNotification(RemoteMessage message) async {
+handleNotification(RemoteMessage message) async {
   if (message.data["notification_type"] == "request") {
     // for new vehicle request
+    Constants.requestId = message.data["request_id"].toString();
     var response = await Utilities.showRequestDialog(
       Get.context!,
       message.notification!.title.toString(),
@@ -65,6 +66,15 @@ displayNotification(RemoteMessage message) async {
       Constants.isRequestedForVehicle.value = false;
       Utilities.showToast("Your request has been rejected");
     }
+  } else if (message.data["notification_type"] == "start_trip") {
+    //start trip for passenger
+    Constants.isTripStarted.value = true;
+  } else if (message.data["notification_type"] == "end_trip") {
+    //end trip for passenger
+    Constants.isTripEnded.value = true;
+    Constants.isTripStarted.value = false;
+    Constants.isTripAccepted.value = false;
+    Constants.isRequestedForVehicle.value = false;
   } else {
     Utilities.showAlertDialog(
         Get.context!,
@@ -100,12 +110,12 @@ class FirebaseServices extends GetxController {
       FirebaseMessaging.onMessage.listen(
         (message) async {
           print("Message came");
-          displayNotification(message);
+          handleNotification(message);
         },
       );
       FirebaseMessaging.onMessageOpenedApp.listen((message) {
         print(message);
-        displayNotification(message);
+        handleNotification(message);
       });
     } else {
       Utilities.showToast('User declined or has not accepted permission',

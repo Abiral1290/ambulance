@@ -14,6 +14,7 @@ class Constants {
   static String? selectedDriverName; //for public to show in map
   static var isRequestedForVehicle = false.obs; //for public
   static var isTripAccepted = false.obs; //for public
+  static String requestId = 0.toString();
 
   static var isTripStarted = false.obs; // for driver
   static var isTripEnded = false.obs; // for driver

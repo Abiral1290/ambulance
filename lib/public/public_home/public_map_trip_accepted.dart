@@ -67,7 +67,7 @@ class _PublicMaptripAcceptedPageState extends State<PublicMaptripAcceptedPage> {
   @override
   void initState() {
     fetchDevice();
-    timer = Timer(const Duration(seconds: 10), () {
+    timer = Timer.periodic(const Duration(seconds: 10), (timer) {
       fetchDevice();
     });
     super.initState();
@@ -199,12 +199,14 @@ class _PublicMaptripAcceptedPageState extends State<PublicMaptripAcceptedPage> {
               ),
             ],
           ),
-          TextButton(
-              onPressed: () {
-                Constants.isTripAccepted.value = false;
-                Constants.isRequestedForVehicle.value = false;
-              },
-              child: Text("End Trip", style: TextStyle(color: Constants.color)))
+          Obx(
+            () => (!(Constants.isTripStarted.value) &&
+                    Constants.isTripAccepted.value)
+                ? Text("Your ambulance is on the way",
+                    style: TextStyle(color: Constants.color))
+                : Text("Trip Started",
+                    style: TextStyle(color: Constants.color)),
+          )
         ],
       ),
     );

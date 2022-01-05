@@ -98,3 +98,54 @@ Future<ApiResponse> sendResponseApi(String respons, String requestId) async {
     return ApiResponse(false, e.toString(), null);
   }
 }
+
+Future<ApiResponse> sendStartTripApi(
+    String requestId, String tripStartTime) async {
+  try {
+    var headers = {
+      "Accept": "application/json",
+      "Authorization": "Bearer ${Get.find<AuthController>().users!.apiToken}"
+    };
+    var bodyData = {"request_id": requestId, "trip_start_time": tripStartTime};
+    var response = await http.post(Uri.parse(ApiUrls.tripStart),
+        headers: headers, body: bodyData);
+
+    if (response.statusCode == 200) {
+      var mapResponse = json.decode(response.body);
+      return ApiResponse(mapResponse["success"], mapResponse["message"], null);
+    } else {
+      return ApiResponse(false, response.reasonPhrase!, null);
+    }
+  } catch (e) {
+    print(e.toString());
+    return ApiResponse(false, e.toString(), null);
+  }
+}
+
+Future<ApiResponse> sendEndTripApi(
+    String requestId, String tripEndTime, String lat, String long) async {
+  try {
+    var headers = {
+      "Accept": "application/json",
+      "Authorization": "Bearer ${Get.find<AuthController>().users!.apiToken}"
+    };
+    var bodyData = {
+      "request_id": requestId,
+      "trip_end_time": tripEndTime,
+      "lat": lat,
+      "long": long
+    };
+    var response = await http.post(Uri.parse(ApiUrls.tripEnd),
+        headers: headers, body: bodyData);
+
+    if (response.statusCode == 200) {
+      var mapResponse = json.decode(response.body);
+      return ApiResponse(mapResponse["success"], mapResponse["message"], null);
+    } else {
+      return ApiResponse(false, response.reasonPhrase!, null);
+    }
+  } catch (e) {
+    print(e.toString());
+    return ApiResponse(false, e.toString(), null);
+  }
+}
