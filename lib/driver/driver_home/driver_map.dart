@@ -6,6 +6,7 @@ import 'package:ambulance_nepal/vehicle_request/vehicle_request_controller.dart'
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 // ignore: must_be_immutable
 class DriverMapPage extends StatefulWidget {
@@ -120,47 +121,44 @@ class _DriverMapPageState extends State<DriverMapPage> {
   }
 
   Widget mapTypesToggleButton(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 25.0, top: 15.0),
-      child: CircleAvatar(
-        backgroundColor: Constants.color,
-        child: PopupMenuButton<ToggleButtonItem>(
-            icon: const Icon(
-              Icons.map,
-              color: Colors.white,
-            ),
-            onSelected: (ToggleButtonItem value) {
-              if (value.name == "Normal") {
-                mapController.changeMapType(MapType.normal);
-              } else if (value.name == "Hybrid") {
-                mapController.changeMapType(MapType.hybrid);
-              } else if (value.name == "Terrain") {
-                mapController.changeMapType(MapType.terrain);
-              } else if (value.name == "Satellite") {
-                mapController.changeMapType(MapType.satellite);
-              }
-            },
-            itemBuilder: (BuildContext context) {
-              return mapTypeList.map((ToggleButtonItem mapTypeItem) {
-                return PopupMenuItem<ToggleButtonItem>(
-                  value: mapTypeItem,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      mapTypeItem.icon!,
-                      Text(
-                        mapTypeItem.name!,
-                        style: const TextStyle(
-                          fontSize: 12,
-                        ),
+    return CircleAvatar(
+      backgroundColor: Constants.color,
+      child: PopupMenuButton<ToggleButtonItem>(
+          icon: const Icon(
+            Icons.map,
+            color: Colors.white,
+          ),
+          onSelected: (ToggleButtonItem value) {
+            if (value.name == "Normal") {
+              mapController.changeMapType(MapType.normal);
+            } else if (value.name == "Hybrid") {
+              mapController.changeMapType(MapType.hybrid);
+            } else if (value.name == "Terrain") {
+              mapController.changeMapType(MapType.terrain);
+            } else if (value.name == "Satellite") {
+              mapController.changeMapType(MapType.satellite);
+            }
+          },
+          itemBuilder: (BuildContext context) {
+            return mapTypeList.map((ToggleButtonItem mapTypeItem) {
+              return PopupMenuItem<ToggleButtonItem>(
+                value: mapTypeItem,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    mapTypeItem.icon!,
+                    Text(
+                      mapTypeItem.name!,
+                      style: const TextStyle(
+                        fontSize: 12,
                       ),
-                    ],
-                  ),
-                );
-              }).toList();
-            }),
-      ),
+                    ),
+                  ],
+                ),
+              );
+            }).toList();
+          }),
     );
   }
 
@@ -198,6 +196,56 @@ class _DriverMapPageState extends State<DriverMapPage> {
         ));
   }
 
+  Widget tripDescription() {
+    return Container(
+      width: Get.size.width * 0.7,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(Constants.borderRadius),
+        color: Colors.grey,
+      ),
+      padding: const EdgeInsets.all(10.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            children: [
+              const Text(
+                "Patient: ",
+                style: TextStyle(fontSize: 16.0),
+              ),
+              Text(
+                widget.name,
+                style: const TextStyle(fontSize: 17.0),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              const Text(
+                "Number: ",
+                style: TextStyle(fontSize: 16.0),
+              ),
+              Row(
+                children: [
+                  Text(
+                    widget.number,
+                    style: const TextStyle(fontSize: 17.0),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      launch("tel:${widget.number}");
+                    },
+                    icon: const Icon(Icons.call),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -218,7 +266,21 @@ class _DriverMapPageState extends State<DriverMapPage> {
                         _mapView(),
                         Align(
                           alignment: Alignment.topLeft,
-                          child: mapTypesToggleButton(context),
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.only(left: 10.0, top: 10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                mapTypesToggleButton(context),
+                                const SizedBox(
+                                  width: 8.0,
+                                ),
+                                tripDescription(),
+                              ],
+                            ),
+                          ),
                         ),
                         Align(
                           alignment: Alignment.bottomCenter,

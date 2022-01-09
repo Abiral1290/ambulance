@@ -232,7 +232,7 @@ class _PublicMapPageState extends State<PublicMapPage> {
 
   Widget mapTypesToggleButton(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 25.0, top: 15.0),
+      padding: const EdgeInsets.only(left: 25.0, bottom: 35.0),
       child: CircleAvatar(
         backgroundColor: Constants.color,
         child: PopupMenuButton<ToggleButtonItem>(
@@ -275,6 +275,21 @@ class _PublicMapPageState extends State<PublicMapPage> {
     );
   }
 
+  Widget backButton(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 25.0, top: 25.0),
+      child: CircleAvatar(
+        backgroundColor: Constants.color,
+        child: IconButton(
+          onPressed: () => Get.back(),
+          icon: const Icon(Icons.arrow_back_ios),
+          alignment: Alignment.center,
+          color: Colors.white,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -290,8 +305,12 @@ class _PublicMapPageState extends State<PublicMapPage> {
                     children: [
                       _mapView(),
                       Align(
-                        alignment: Alignment.topLeft,
+                        alignment: Alignment.bottomLeft,
                         child: mapTypesToggleButton(context),
+                      ),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: backButton(context),
                       ),
                       Align(
                         alignment: Alignment.topCenter,

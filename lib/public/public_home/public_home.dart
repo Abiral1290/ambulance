@@ -1,6 +1,5 @@
 import 'package:ambulance_nepal/hospitals/view_hospitals.dart';
-import 'package:ambulance_nepal/public/public_home/public_map.dart';
-import 'package:ambulance_nepal/public/public_home/public_map_trip_accepted.dart';
+import 'package:ambulance_nepal/public/public_home/public_map_home.dart';
 import 'package:ambulance_nepal/public/public_home/public_profile.dart';
 import 'package:ambulance_nepal/services/firebase_services.dart';
 import 'package:ambulance_nepal/settings/settings.dart';
@@ -53,11 +52,12 @@ class _PublicHomePageState extends State<PublicHomePage> {
   ];
 
   final bodyWidget = [
-    Obx(
-      () => Constants.isTripAccepted.value
-          ? const PublicMaptripAcceptedPage()
-          : const PublicMapPage(),
-    ),
+    // Obx(
+    //   () => Constants.isTripAccepted.value
+    //       ? const PublicMaptripAcceptedPage()
+    //       : const PublicMapPage(),
+    // ),
+    const PublicMapHomePage(),
     PublicProfilePage(),
     ViewHospitalPage(),
     SettingsPage(),

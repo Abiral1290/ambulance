@@ -8,6 +8,7 @@ import 'package:ambulance_nepal/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 // ignore: must_be_immutable
 class PublicMaptripAcceptedPage extends StatefulWidget {
@@ -193,9 +194,19 @@ class _PublicMaptripAcceptedPageState extends State<PublicMaptripAcceptedPage> {
                 "Number: ",
                 style: TextStyle(fontSize: 16.0),
               ),
-              Text(
-                Constants.selectedDriverNumber!,
-                style: const TextStyle(fontSize: 17.0),
+              Row(
+                children: [
+                  Text(
+                    Constants.selectedDriverNumber!,
+                    style: const TextStyle(fontSize: 17.0),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      launch("tel:${Constants.selectedDriverNumber!}");
+                    },
+                    icon: const Icon(Icons.call),
+                  ),
+                ],
               ),
             ],
           ),
@@ -214,40 +225,46 @@ class _PublicMaptripAcceptedPageState extends State<PublicMaptripAcceptedPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: GetBuilder<LocationServices>(builder: (builder) {
-        return Get.find<LocationServices>().locationData == null
-            ? const Center(
-                child: CircularProgressIndicator.adaptive(),
-              )
-            : GetBuilder<MapController>(builder: (builder) {
-                return SafeArea(
-                  bottom: false,
-                  child: Stack(
-                    children: [
-                      _mapView(),
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 10.0, top: 10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              mapTypesToggleButton(context),
-                              const SizedBox(
-                                width: 8.0,
-                              ),
-                              tripDescription(),
-                            ],
+    return WillPopScope(
+      onWillPop: () async {
+        return false;
+      },
+      child: Scaffold(
+        body: GetBuilder<LocationServices>(builder: (builder) {
+          return Get.find<LocationServices>().locationData == null
+              ? const Center(
+                  child: CircularProgressIndicator.adaptive(),
+                )
+              : GetBuilder<MapController>(builder: (builder) {
+                  return SafeArea(
+                    bottom: false,
+                    child: Stack(
+                      children: [
+                        _mapView(),
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.only(left: 10.0, top: 10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                mapTypesToggleButton(context),
+                                const SizedBox(
+                                  width: 8.0,
+                                ),
+                                tripDescription(),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                );
-              });
-      }),
+                      ],
+                    ),
+                  );
+                });
+        }),
+      ),
     );
   }
 }

@@ -39,54 +39,60 @@ class _DriverHomePageState extends State<DriverHomePage> {
           childAspectRatio: 1.2,
           crossAxisCount: 2,
           children: [
+            // IndividualCardTile(
+            //   title: "Passenger",
+            //   onPressed: () {},
+            //   icon: Icon(
+            //     Icons.person_search,
+            //     size: iconSize,
+            //   ),
+            // ),
             IndividualCardTile(
-                title: "Passenger",
-                onPressed: () {},
-                icon: Icon(
-                  Icons.person_search,
-                  size: iconSize,
-                )),
+              title: "Hospitals",
+              onPressed: () {
+                Get.to(() => ViewHospitalPage());
+              },
+              icon: Icon(
+                Icons.local_hospital_rounded,
+                size: iconSize,
+              ),
+            ),
+            // IndividualCardTile(
+            //   title: "Notification",
+            //   onPressed: () {},
+            //   icon: Icon(
+            //     Icons.notifications,
+            //     size: iconSize,
+            //   ),
+            // ),
             IndividualCardTile(
-                title: "Hospitals",
-                onPressed: () {
-                  Get.to(() => ViewHospitalPage());
-                },
-                icon: Icon(
-                  Icons.local_hospital_rounded,
-                  size: iconSize,
-                )),
+              title: "Profile",
+              onPressed: () {
+                Get.to(() => DriverProfilePage());
+              },
+              icon: Icon(
+                Icons.info_outline,
+                size: iconSize,
+              ),
+            ),
+            // IndividualCardTile(
+            //   title: "Something other",
+            //   onPressed: () {},
+            //   icon: Icon(
+            //     Icons.devices_other,
+            //     size: iconSize,
+            //   ),
+            // ),
             IndividualCardTile(
-                title: "Notification",
-                onPressed: () {},
-                icon: Icon(
-                  Icons.notifications,
-                  size: iconSize,
-                )),
-            IndividualCardTile(
-                title: "Profile",
-                onPressed: () {
-                  Get.to(() => DriverProfilePage());
-                },
-                icon: Icon(
-                  Icons.info_outline,
-                  size: iconSize,
-                )),
-            IndividualCardTile(
-                title: "Something other",
-                onPressed: () {},
-                icon: Icon(
-                  Icons.devices_other,
-                  size: iconSize,
-                )),
-            IndividualCardTile(
-                title: "Settings",
-                onPressed: () {
-                  Get.to(() => SettingsPage());
-                },
-                icon: Icon(
-                  Icons.settings,
-                  size: iconSize,
-                )),
+              title: "Settings",
+              onPressed: () {
+                Get.to(() => SettingsPage());
+              },
+              icon: Icon(
+                Icons.settings,
+                size: iconSize,
+              ),
+            ),
           ],
         ),
       ),

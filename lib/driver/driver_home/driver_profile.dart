@@ -12,6 +12,7 @@ class DriverProfilePage extends StatelessWidget {
 
   final authController = Get.find<AuthController>().getProfile();
   final driverController = Get.put(DriverController());
+  final hospitalController = Get.put(HospitalsController());
 
   onRefresh() {
     Get.find<AuthController>().getProfile();
