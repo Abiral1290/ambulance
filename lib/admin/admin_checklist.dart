@@ -12,6 +12,7 @@ class AdminChecklist {
   String? rejectedMessage;
   String? rejectedType;
   String? vehicleNumber;
+  String? uniqueId;
   String? stethoscope;
   String? bpSet;
   String? trouchLight;
@@ -53,6 +54,7 @@ class AdminChecklist {
       this.rejectedMessage,
       this.rejectedType,
       this.vehicleNumber,
+      this.uniqueId,
       this.stethoscope,
       this.bpSet,
       this.trouchLight,
@@ -94,6 +96,7 @@ class AdminChecklist {
     rejectedMessage = json['rejected_message'];
     rejectedType = json['rejected_type'];
     vehicleNumber = json['vehicle_number'];
+    uniqueId = json['unique_id'];
     stethoscope = json['stethoscope'];
     bpSet = json['bp_set'];
     trouchLight = json['trouch_light'];
@@ -138,6 +141,7 @@ class AdminChecklist {
     data['rejected_message'] = rejectedMessage;
     data['rejected_type'] = rejectedType;
     data['vehicle_number'] = vehicleNumber;
+    data['unique_id'] = uniqueId;
     data['stethoscope'] = stethoscope;
     data['bp_set'] = bpSet;
     data['trouch_light'] = trouchLight;

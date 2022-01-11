@@ -66,12 +66,21 @@ class LoginPage extends StatelessWidget {
         ),
         color: Constants.color,
       ),
+      resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(Constants.verticalPadding),
           child: Center(
             child: Column(
               children: [
+                SizedBox(
+                  width: 200,
+                  height: 200,
+                  child: Image.asset(
+                    "assets/images/ams_transparent.png",
+                    fit: BoxFit.fill,
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(
                       vertical: Constants.verticalPadding),

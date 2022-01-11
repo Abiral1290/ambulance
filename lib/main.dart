@@ -1,5 +1,5 @@
-import 'package:ambulance_nepal/authentication/checkauth.dart';
 import 'package:ambulance_nepal/controller_bindings.dart';
+import 'package:ambulance_nepal/widget/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const Checkauth(),
+      home: const SplashScreen(),
     );
   }
 }

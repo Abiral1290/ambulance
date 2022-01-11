@@ -100,7 +100,8 @@ class _PublicMapPageState extends State<PublicMapPage> {
   }
 
   createMarkerIcon() async {
-    await getBytesFromAsset('assets/ambulance_marker.png', 64).then((onValue) {
+    await getBytesFromAsset('assets/images/ambulance_marker.png', 64)
+        .then((onValue) {
       ambulanceIcon = BitmapDescriptor.fromBytes(onValue);
     });
   }

@@ -13,8 +13,10 @@ class AdminChecklistFormPage extends StatelessWidget {
 
   Ambulance ambulance;
 
-  final TextEditingController _vehicleNumberController =
-      TextEditingController();
+  late final TextEditingController _vehicleNumberController =
+      TextEditingController(text: ambulance.vehicleNumber);
+
+  final TextEditingController _uniqueIdController = TextEditingController();
 
   final TextEditingController _medicineController = TextEditingController();
 
@@ -42,6 +44,27 @@ class AdminChecklistFormPage extends StatelessWidget {
         Expanded(
           child: TextField(
             controller: _vehicleNumberController,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildUniqueIdField() {
+    return Row(
+      children: [
+        const Text(
+          "Unique Id*: ",
+          style: TextStyle(
+            fontSize: 16.0,
+          ),
+        ),
+        SizedBox(
+          width: Get.width * 0.05,
+        ),
+        Expanded(
+          child: TextField(
+            controller: _uniqueIdController,
           ),
         ),
       ],
@@ -78,6 +101,7 @@ class AdminChecklistFormPage extends StatelessWidget {
 
   validateInput() {
     return _vehicleNumberController.text.isNotEmpty &&
+        _uniqueIdController.text.isNotEmpty &&
         _acceptStatus.value != AcceptStatus.none;
   }
 
@@ -88,6 +112,7 @@ class AdminChecklistFormPage extends StatelessWidget {
     checklist.rejectedMessage = _rejectedMessageController.text;
     checklist.rejectedType = count.toString();
     checklist.vehicleNumber = _vehicleNumberController.text;
+    checklist.uniqueId = _uniqueIdController.text;
     checklist.medicines = _medicineController.text;
     checklist.stethoscope = checked[1].toString();
     checklist.bpSet = checked[2].toString();
@@ -141,6 +166,7 @@ class AdminChecklistFormPage extends StatelessWidget {
           child: Column(
             children: [
               buildVehicleNumberField(),
+              buildUniqueIdField(),
               buildIndividualItem("Stethoscope", 1),
               buildIndividualItem("B.P set", 2),
               buildIndividualItem("Torch Light", 3),

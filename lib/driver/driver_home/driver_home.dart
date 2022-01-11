@@ -18,8 +18,6 @@ class DriverHomePage extends StatefulWidget {
 class _DriverHomePageState extends State<DriverHomePage> {
   var controller = Get.put(FirebaseServices(), permanent: true);
 
-  final iconSize = 40.0;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,10 +50,7 @@ class _DriverHomePageState extends State<DriverHomePage> {
               onPressed: () {
                 Get.to(() => ViewHospitalPage());
               },
-              icon: Icon(
-                Icons.local_hospital_rounded,
-                size: iconSize,
-              ),
+              icon: Icons.local_hospital_rounded,
             ),
             // IndividualCardTile(
             //   title: "Notification",
@@ -70,10 +65,7 @@ class _DriverHomePageState extends State<DriverHomePage> {
               onPressed: () {
                 Get.to(() => DriverProfilePage());
               },
-              icon: Icon(
-                Icons.info_outline,
-                size: iconSize,
-              ),
+              icon: Icons.info_outline,
             ),
             // IndividualCardTile(
             //   title: "Something other",
@@ -88,10 +80,7 @@ class _DriverHomePageState extends State<DriverHomePage> {
               onPressed: () {
                 Get.to(() => SettingsPage());
               },
-              icon: Icon(
-                Icons.settings,
-                size: iconSize,
-              ),
+              icon: Icons.settings,
             ),
           ],
         ),
@@ -111,7 +100,8 @@ class IndividualCardTile extends StatelessWidget {
 
   String title;
   VoidCallback onPressed;
-  Icon icon;
+  IconData icon;
+  final iconSize = 40.0;
 
   @override
   Widget build(BuildContext context) {
@@ -122,18 +112,27 @@ class IndividualCardTile extends StatelessWidget {
         elevation: 5.0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(Constants.borderRadius),
+          side: BorderSide(
+            color: Constants.color,
+            width: 2,
+          ),
         ),
         child: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              icon,
+              Icon(
+                icon,
+                size: iconSize,
+              ),
               const SizedBox(
                 height: 15.0,
               ),
               Text(
                 title,
-                style: const TextStyle(fontSize: 16.0),
+                style: const TextStyle(
+                  fontSize: 16.0,
+                ),
               ),
             ],
           ),
