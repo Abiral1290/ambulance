@@ -126,7 +126,7 @@ class AmbulanceListwidget extends StatelessWidget {
             trailing: IconButton(
                 onPressed: () {
                   if (int.parse(ambulanceList[index].formLevel.toString()) >
-                      7) {
+                      10) {
                     Utilities.showToast(
                         "Vehicle has already been rejected 3 times.",
                         toastType: ToastType.info);

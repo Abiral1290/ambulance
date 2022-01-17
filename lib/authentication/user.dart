@@ -77,6 +77,25 @@ class Users {
   }
 }
 
+class ErrorResponse {
+  List<String>? phone;
+  List<String>? email;
+
+  ErrorResponse({this.phone, this.email});
+
+  ErrorResponse.fromJson(Map<String, dynamic> json) {
+    phone = json['phone'].cast<String>();
+    email = json['email'].cast<String>();
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['phone'] = phone;
+    data['email'] = email;
+    return data;
+  }
+}
+
 Future<ApiResponse<Users?>> loginApi(
     String phone, String password, String role, String firebaseToken) async {
   var bodyData = {
@@ -122,7 +141,24 @@ Future<ApiResponse<Users?>> registerApi(Users users) async {
     if (response.statusCode == 200) {
       var mapResponse = json.decode(response.body);
 
-      return ApiResponse(mapResponse["success"], mapResponse["message"], null);
+      String message = "";
+
+      if (mapResponse["message"] is String) {
+        message = mapResponse["message"];
+      } else {
+        message =
+            "Either email or phone is already taken. Try again with different number or email";
+        // var messageJson = ErrorResponse.fromJson(mapResponse["message"]);
+        // if (messageJson.email != null) {
+        //   message = " " + message + messageJson.email!.first;
+        // }
+        // if (messageJson.phone != null) {
+        //   message = " " + message + messageJson.phone!.first;
+        // }
+      }
+      print(message);
+
+      return ApiResponse(mapResponse["success"], message, null);
     } else {
       return ApiResponse(false, response.reasonPhrase!, null);
     }

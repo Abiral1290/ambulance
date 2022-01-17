@@ -66,6 +66,19 @@ class DriverRegisterPage extends StatelessWidget {
     return _emailController.text.isEmail;
   }
 
+  bool validateDob() {
+    var diffInYears = ((picker.NepaliDateTime.parse(dob.value))
+            .difference(picker.NepaliDateTime.now())
+            .inDays
+            .abs()) /
+        365;
+    if (diffInYears > 24) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   pickImage(String type, ImageSource source) async {
     switch (type) {
       case "LICENSE":
@@ -345,21 +358,21 @@ class DriverRegisterPage extends StatelessWidget {
               initialDate: picker.NepaliDateTime.now()
                   .subtract(const Duration(days: 9125)),
               firstDate: picker.NepaliDateTime(1970),
-              lastDate: picker.NepaliDateTime(2100),
+              lastDate: picker.NepaliDateTime(picker.NepaliDateTime.now().year),
               language: picker.Language.nepali,
             );
 
             if (selectedDateTime != null) {
               print(selectedDateTime);
               var dateTime = selectedDateTime.toString();
-              dob.value = dateTime.split(" ").first;
+              dob.value = dateTime;
             }
           },
           child: InputDecorator(
             decoration: decoration("DOB", icon: const Icon(Icons.date_range)),
             child: Obx(() {
               return Text(
-                dob.value,
+                dob.value.split(" ").first,
               );
             }),
           ),
@@ -441,9 +454,15 @@ class DriverRegisterPage extends StatelessWidget {
             if (validateRequired()) {
               if (validateNumber()) {
                 if (validateEmail()) {
-                  Driver driver = assignValue();
-                  print(driver);
-                  Get.to(() => PasswordField(user: driver));
+                  if (validateDob()) {
+                    Driver driver = assignValue();
+                    print(driver);
+                    Get.to(() => PasswordField(user: driver));
+                  } else {
+                    Utilities.showToast(
+                        "You must be greater than 25 years to register as driver",
+                        toastType: ToastType.error);
+                  }
                 } else {
                   Utilities.showToast("Email is not valid",
                       toastType: ToastType.error);

@@ -231,7 +231,7 @@ class AdminChecklistFormPage extends StatelessWidget {
                                 value: AcceptStatus.accept,
                                 groupValue: _acceptStatus.value,
                                 onChanged: (AcceptStatus? value) {
-                                  count = 9;
+                                  count = 12;
                                   _acceptStatus.value = value!;
                                 },
                               ),
